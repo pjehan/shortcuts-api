@@ -21,7 +21,7 @@ class SoftwareFixtures extends Fixture
         foreach ($softwares as $software) {
             $s = new Software();
             $s->setName($software[0]);
-            $s->setLogo($software[1]);
+            $s->setLogo($software[1] . '.png');
             $manager->persist($s);
             $this->addReference($software[1], $s);
         }
