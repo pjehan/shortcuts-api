@@ -7,10 +7,11 @@ use App\Repository\ShortcutRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ShortcutRepository::class)
- * @ApiResource
+ * @ApiResource(normalizationContext={"groups"={"shortcut"}})
  * @ORM\HasLifecycleCallbacks
  */
 class Shortcut
@@ -19,57 +20,68 @@ class Shortcut
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"shortcut"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"shortcut"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"shortcut"})
      */
     private $windows;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"shortcut"})
      */
     private $macos;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"shortcut"})
      */
     private $linux;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"shortcut"})
      */
     private $context;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"shortcut"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"shortcut"})
      */
     private $image;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"shortcut"})
      */
     private $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=Software::class, inversedBy="shortcuts")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"shortcut"})
      */
     private $software;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="shortcuts")
+     * @Groups({"shortcut"})
      */
     private $categories;
 
