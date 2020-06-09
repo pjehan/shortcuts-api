@@ -236,7 +236,9 @@ class Shortcut
      * @ORM\PrePersist
      */
     public function prePersist() {
-        $this->setCreatedAt(new \DateTime());
+        if ($this->getCreatedAt() === null) {
+            $this->setCreatedAt(new \DateTime());
+        }
     }
 
 }
