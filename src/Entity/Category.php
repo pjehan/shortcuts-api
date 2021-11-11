@@ -29,13 +29,13 @@ class Category
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    #[Groups(['shortcut:read', 'category:read:item'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['shortcut:read', 'category:read:item'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private string $name;
 
     /**

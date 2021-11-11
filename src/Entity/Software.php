@@ -11,8 +11,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SoftwareRepository::class)
- * @ApiResource
  */
+#[ApiResource(
+    itemOperations: [
+        'get' => [
+            'normalization_context' => ['groups' => 'software:read:item', 'enable_max_depth' => true]
+        ],
+        'put',
+        'patch',
+        'delete'
+    ]
+)]
 class Software
 {
     /**
@@ -20,24 +29,25 @@ class Software
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    #[Groups(['shortcut:read', 'category:read:item'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['shortcut:read', 'category:read:item'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private string $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['shortcut:read', 'category:read:item'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private string $logo;
 
     /**
      * @ORM\OneToMany(targetEntity=Shortcut::class, mappedBy="software", orphanRemoval=true)
      */
+    #[Groups(['software:read:item'])]
     private Collection $shortcuts;
 
     public function __construct()

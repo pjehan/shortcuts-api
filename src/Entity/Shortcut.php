@@ -25,13 +25,13 @@ class Shortcut
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    #[Groups(['shortcut:read', 'category:read:item'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['shortcut:read', 'category:read:item'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private string $title;
 
     /**
@@ -67,26 +67,27 @@ class Shortcut
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    #[Groups(['shortcut:read', 'category:read:item'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private ?string $image;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    #[Groups(['shortcut:read', 'category:read:item'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private \DateTimeInterface $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=Software::class, inversedBy="shortcuts")
      * @ORM\JoinColumn(nullable=false)
      */
-    #[Groups(['shortcut:read', 'category:read:item'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
+    #[MaxDepth(1)]
     private Software $software;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="shortcuts")
      */
-    #[Groups(['shortcut:read', 'category:read:item'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     #[MaxDepth(1)]
     private Collection $categories;
 
