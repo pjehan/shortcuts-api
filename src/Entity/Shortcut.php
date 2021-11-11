@@ -10,10 +10,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=ShortcutRepository::class)
- * @ApiResource(normalizationContext={"groups"={"shortcut"}})
+ * @ApiResource(normalizationContext={"groups"={"shortcut:read"}})
  * @ApiFilter(OrderFilter::class, properties={"created_at"}, arguments={"orderParameterName"="order"})
  * @ORM\HasLifecycleCallbacks
  */
@@ -23,69 +24,70 @@ class Shortcut
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read', 'category:read:item'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read', 'category:read:item'])]
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read'])]
     private $windows;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read'])]
     private $macos;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read'])]
     private $linux;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read'])]
     private $context;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read'])]
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read', 'category:read:item'])]
     private $image;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read', 'category:read:item'])]
     private $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=Software::class, inversedBy="shortcuts")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read', 'category:read:item'])]
     private $software;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="shortcuts")
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read', 'category:read:item'])]
+    #[MaxDepth(1)]
     private $categories;
 
     public function __construct()

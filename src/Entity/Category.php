@@ -11,27 +11,37 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
- * @ApiResource
  */
+#[ApiResource(
+    itemOperations: [
+        'get' => [
+            'normalization_context' => ['groups' => 'category:read:item', 'enable_max_depth' => true]
+        ],
+        'put',
+        'patch',
+        'delete'
+    ]
+)]
 class Category
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read', 'category:read:item'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read', 'category:read:item'])]
     private $name;
 
     /**
      * @ORM\ManyToMany(targetEntity=Shortcut::class, mappedBy="categories")
      */
+    #[Groups(['category:read:item'])]
     private $shortcuts;
 
     public function __construct()

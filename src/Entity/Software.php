@@ -19,20 +19,20 @@ class Software
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read', 'category:read:item'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read', 'category:read:item'])]
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"shortcut"})
      */
+    #[Groups(['shortcut:read', 'category:read:item'])]
     private $logo;
 
     /**
