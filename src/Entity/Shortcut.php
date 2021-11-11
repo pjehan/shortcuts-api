@@ -26,69 +26,69 @@ class Shortcut
      * @ORM\Column(type="integer")
      */
     #[Groups(['shortcut:read', 'category:read:item'])]
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     #[Groups(['shortcut:read', 'category:read:item'])]
-    private $title;
+    private string $title;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     #[Groups(['shortcut:read'])]
-    private $windows;
+    private string $windows;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     #[Groups(['shortcut:read'])]
-    private $macos;
+    private string $macos;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     #[Groups(['shortcut:read'])]
-    private $linux;
+    private string $linux;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     #[Groups(['shortcut:read'])]
-    private $context;
+    private string $context;
 
     /**
      * @ORM\Column(type="text")
      */
     #[Groups(['shortcut:read'])]
-    private $description;
+    private string $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     #[Groups(['shortcut:read', 'category:read:item'])]
-    private $image;
+    private ?string $image;
 
     /**
      * @ORM\Column(type="datetime")
      */
     #[Groups(['shortcut:read', 'category:read:item'])]
-    private $created_at;
+    private \DateTimeInterface $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=Software::class, inversedBy="shortcuts")
      * @ORM\JoinColumn(nullable=false)
      */
     #[Groups(['shortcut:read', 'category:read:item'])]
-    private $software;
+    private Software $software;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="shortcuts")
      */
     #[Groups(['shortcut:read', 'category:read:item'])]
     #[MaxDepth(1)]
-    private $categories;
+    private Collection $categories;
 
     public function __construct()
     {
@@ -237,7 +237,8 @@ class Shortcut
     /**
      * @ORM\PrePersist
      */
-    public function prePersist() {
+    public function prePersist(): void
+    {
         if ($this->getCreatedAt() === null) {
             $this->setCreatedAt(new \DateTime());
         }

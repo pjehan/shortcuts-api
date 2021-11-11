@@ -21,24 +21,24 @@ class Software
      * @ORM\Column(type="integer")
      */
     #[Groups(['shortcut:read', 'category:read:item'])]
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     #[Groups(['shortcut:read', 'category:read:item'])]
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     #[Groups(['shortcut:read', 'category:read:item'])]
-    private $logo;
+    private string $logo;
 
     /**
      * @ORM\OneToMany(targetEntity=Shortcut::class, mappedBy="software", orphanRemoval=true)
      */
-    private $shortcuts;
+    private Collection $shortcuts;
 
     public function __construct()
     {

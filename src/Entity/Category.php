@@ -30,19 +30,19 @@ class Category
      * @ORM\Column(type="integer")
      */
     #[Groups(['shortcut:read', 'category:read:item'])]
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     #[Groups(['shortcut:read', 'category:read:item'])]
-    private $name;
+    private string $name;
 
     /**
      * @ORM\ManyToMany(targetEntity=Shortcut::class, mappedBy="categories")
      */
     #[Groups(['category:read:item'])]
-    private $shortcuts;
+    private Collection $shortcuts;
 
     public function __construct()
     {
