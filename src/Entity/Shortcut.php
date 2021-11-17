@@ -244,9 +244,7 @@ class Shortcut
      */
     public function prePersist(): void
     {
-        if ($this->getCreatedAt() === null) {
-            $this->setCreatedAt(new \DateTime());
-        }
+        $this->setCreatedAt(new \DateTime());
     }
 
 }

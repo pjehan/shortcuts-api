@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\MediaObject;
 use App\Entity\Software;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -21,7 +22,9 @@ class SoftwareFixtures extends Fixture
         foreach ($softwares as $software) {
             $s = new Software();
             $s->setName($software[0]);
-            $s->setLogo($software[1] . '.png');
+            $logo = new MediaObject();
+            $logo->filePath = $software[1] . '.png';
+            $s->setLogo($logo);
             $manager->persist($s);
             $this->addReference($software[1], $s);
         }

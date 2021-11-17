@@ -13,6 +13,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=SoftwareRepository::class)
  */
 #[ApiResource(
+    collectionOperations: [
+        'get' => [
+            'normalization_context' => ['groups' => 'software:read:collection', 'enable_max_depth' => true]
+        ]
+    ],
     itemOperations: [
         'get' => [
             'normalization_context' => ['groups' => 'software:read:item', 'enable_max_depth' => true]
@@ -29,20 +34,22 @@ class Software
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item', 'software:read:collection'])]
     private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item', 'software:read:collection'])]
     private string $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
-    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
-    private string $logo;
+    #[ApiProperty(iri: 'https://schema.org/image')]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item', 'software:read:collection'])]
+    private ?MediaObject $logo;
 
     /**
      * @ORM\OneToMany(targetEntity=Shortcut::class, mappedBy="software", orphanRemoval=true)
@@ -72,12 +79,12 @@ class Software
         return $this;
     }
 
-    public function getLogo(): ?string
+    public function getLogo(): ?MediaObject
     {
         return $this->logo;
     }
 
-    public function setLogo(string $logo): self
+    public function setLogo(MediaObject $logo): self
     {
         $this->logo = $logo;
 
