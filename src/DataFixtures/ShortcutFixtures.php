@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\MediaObject;
 use App\Entity\Shortcut;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -45,7 +46,9 @@ class ShortcutFixtures extends Fixture implements DependentFixtureInterface
         $searchEverywhere->setLinux('Shift Shift');
         $searchEverywhere->setContext('Dans le logiciel PHPStorm');
         $searchEverywhere->setDescription('Permet de rechercher n\'importe quoi (fichier, fonction, variable...) dans un projet.');
-        $searchEverywhere->setImage('search-everywhere.png');
+        $searchEverywhereImage = new MediaObject();
+        $searchEverywhereImage->filePath = 'search-everywhere.png';
+        $searchEverywhere->setImage($searchEverywhereImage);
         $searchEverywhere->setCreatedAt((new \DateTime())->modify("-5 day"));
         $manager->persist($searchEverywhere);
 
@@ -58,7 +61,9 @@ class ShortcutFixtures extends Fixture implements DependentFixtureInterface
         $navigateTo->setLinux('Ctrl Click');
         $navigateTo->setContext('Dans un fichier source dans le logiciel PHPStorm');
         $navigateTo->setDescription('Permet de naviguer rapidement vers la déclaration d\'une fonction, d\'une méthode, d\'une variable...');
-        $navigateTo->setImage('gotodeclaration.gif');
+        $navigateToImage = new MediaObject();
+        $navigateToImage->filePath = 'gotodeclaration.gif';
+        $navigateTo->setImage($navigateToImage);
         $navigateTo->setCreatedAt((new \DateTime())->modify("-3 day"));
         $manager->persist($navigateTo);
 
@@ -71,7 +76,9 @@ class ShortcutFixtures extends Fixture implements DependentFixtureInterface
         $extendSelection->setLinux('Ctrl W');
         $extendSelection->setContext('Dans un fichier source dans le logiciel PHPStorm');
         $extendSelection->setDescription('Permet de sélectionner rapidement un bloc de code.');
-        $extendSelection->setImage('extendselection.gif');
+        $extendSelectionImage = new MediaObject();
+        $extendSelectionImage->filePath = 'extendselection.gif';
+        $extendSelection->setImage($extendSelectionImage);
         $extendSelection->setCreatedAt((new \DateTime())->modify("-1 month"));
         $manager->persist($extendSelection);
 
@@ -84,7 +91,9 @@ class ShortcutFixtures extends Fixture implements DependentFixtureInterface
         $multipleCursors->setLinux('Alt Click');
         $multipleCursors->setContext('Dans un fichier source dans le logiciel PHPStorm');
         $multipleCursors->setDescription('Permet de créer plusieurs curseurs.');
-        $multipleCursors->setImage('multiplecursors.gif');
+        $multipleCursorsImage = new MediaObject();
+        $multipleCursorsImage->filePath = 'multiplecursors.gif';
+        $multipleCursors->setImage($multipleCursorsImage);
         $multipleCursors->setCreatedAt((new \DateTime())->modify("-2 month"));
         $manager->persist($multipleCursors);
 

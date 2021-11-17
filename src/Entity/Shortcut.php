@@ -69,10 +69,12 @@ class Shortcut
     private string $description;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
-    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
-    private ?string $image;
+    #[ApiProperty(iri: 'https://schema.org/image')]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item', 'software:read:collection'])]
+    private ?MediaObject $image;
 
     /**
      * @ORM\Column(type="datetime")
@@ -177,12 +179,12 @@ class Shortcut
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage(): ?MediaObject
     {
         return $this->image;
     }
 
-    public function setImage(?string $image): self
+    public function setImage(?MediaObject $image): self
     {
         $this->image = $image;
 
