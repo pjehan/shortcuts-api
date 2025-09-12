@@ -16,13 +16,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
     collectionOperations: [
         'get' => [
             'normalization_context' => ['groups' => 'software:read:collection', 'enable_max_depth' => true]
-        ]
+        ],
+        'post',
     ],
     itemOperations: [
         'get' => [
             'normalization_context' => ['groups' => 'software:read:item', 'enable_max_depth' => true]
         ],
-        'post',
         'put',
         'patch',
         'delete'

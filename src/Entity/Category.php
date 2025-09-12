@@ -17,7 +17,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'get' => [
             'normalization_context' => ['groups' => 'category:read:item', 'enable_max_depth' => true]
         ],
-        'post',
         'put',
         'patch',
         'delete'
