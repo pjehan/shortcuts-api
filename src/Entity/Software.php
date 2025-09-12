@@ -18,7 +18,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'get' => [
             'normalization_context' => ['groups' => 'software:read:collection', 'enable_max_depth' => true]
         ],
-        'post',
+        'post' => [
+            'denormalization_context' => ['groups' => 'software:write']
+        ],
     ],
     itemOperations: [
         'get' => [
@@ -42,7 +44,7 @@ class Software
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item', 'software:read:collection'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item', 'software:read:collection', 'software:write'])]
     private string $name;
 
     /**
@@ -50,7 +52,7 @@ class Software
      * @ORM\JoinColumn(nullable=true)
      */
     #[ApiProperty(iri: 'https://schema.org/image')]
-    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item', 'software:read:collection'])]
+    #[Groups(['shortcut:read', 'category:read:item', 'software:read:item', 'software:read:collection', 'software:write'])]
     private ?MediaObject $logo;
 
     /**
