@@ -11,10 +11,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @ORM\Entity
- * @Vich\Uploadable
- */
+#[ORM\Entity]
+#[Vich\Uploadable]
 #[ApiResource(
     collectionOperations: [
         'get',
@@ -47,26 +45,20 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 )]
 class MediaObject
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     * @ORM\Id
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     #[ApiProperty(iri: 'http://schema.org/contentUrl')]
     #[Groups(['media_object:read', 'shortcut:read', 'category:read:item', 'software:read:item', 'software:read:collection'])]
     public ?string $contentUrl = null;
 
-    /**
-     * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
-     */
+    #[Vich\UploadableField(mapping: 'media_object', fileNameProperty: 'filePath')]
     #[Assert\NotNull(groups: ['media_object_create'])]
     public ?File $file = null;
 
-    /**
-     * @ORM\Column(nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     public ?string $filePath = null;
 
     public function getId(): ?int

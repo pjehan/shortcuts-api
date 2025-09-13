@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
@@ -13,86 +14,60 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
-/**
- * @ORM\Entity(repositoryClass=ShortcutRepository::class)
- * @ORM\HasLifecycleCallbacks
- */
-#[ApiResource(
-    normalizationContext: ['groups' => 'shortcut:read']
-)]
+#[ORM\Entity(repositoryClass: ShortcutRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+#[ApiResource(normalizationContext: ['groups' => 'shortcut:read'])]
 #[ApiFilter(OrderFilter::class, properties: ['created_at'], arguments: ['orderParameterName' => 'order'])]
 #[ApiFilter(SearchFilter::class, properties: ['software.id' => 'exact', 'categories.id' => 'exact'])]
 class Shortcut
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private string $title;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['shortcut:read'])]
     private string $windows;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['shortcut:read'])]
     private string $macos;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['shortcut:read'])]
     private string $linux;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['shortcut:read'])]
     private string $context;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     #[Groups(['shortcut:read'])]
     private string $description;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
+    #[ORM\ManyToOne(targetEntity: MediaObject::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: true)]
     #[ApiProperty(iri: 'https://schema.org/image')]
     #[Groups(['shortcut:read', 'category:read:item', 'software:read:item', 'software:read:collection'])]
     private ?MediaObject $image;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private \DateTimeInterface $created_at;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Software::class, inversedBy="shortcuts")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Software::class, inversedBy: 'shortcuts')]
+    #[ORM\JoinColumn(nullable: false)]
     #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     #[MaxDepth(1)]
     private Software $software;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="shortcuts")
-     */
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'shortcuts')]
     #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     #[MaxDepth(1)]
     private Collection $categories;

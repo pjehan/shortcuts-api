@@ -10,9 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass=SoftwareRepository::class)
- */
+#[ORM\Entity(repositoryClass: SoftwareRepository::class)]
 #[ApiResource(
     collectionOperations: [
         'get' => [
@@ -33,31 +31,23 @@ use Symfony\Component\Serializer\Annotation\Groups;
 )]
 class Software
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     #[Groups(['shortcut:read', 'category:read:item', 'software:read:item', 'software:read:collection'])]
     private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['shortcut:read', 'category:read:item', 'software:read:item', 'software:read:collection', 'software:write'])]
     private string $name;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
+    #[ORM\ManyToOne(targetEntity: MediaObject::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: true)]
     #[ApiProperty(iri: 'https://schema.org/image')]
     #[Groups(['shortcut:read', 'category:read:item', 'software:read:item', 'software:read:collection', 'software:write'])]
     private ?MediaObject $logo;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Shortcut::class, mappedBy="software", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(mappedBy: 'software', targetEntity: Shortcut::class, orphanRemoval: true)]
     #[Groups(['software:read:item'])]
     private Collection $shortcuts;
 

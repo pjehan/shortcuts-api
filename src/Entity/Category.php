@@ -9,9 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass=CategoryRepository::class)
- */
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ApiResource(
     itemOperations: [
         'get' => [
@@ -24,23 +22,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
 )]
 class Category
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['shortcut:read', 'category:read:item', 'software:read:item'])]
     private string $name;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Shortcut::class, mappedBy="categories")
-     */
+    #[ORM\ManyToMany(targetEntity: Shortcut::class, mappedBy: 'categories')]
     #[Groups(['category:read:item'])]
     private Collection $shortcuts;
 
