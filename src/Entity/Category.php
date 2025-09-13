@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,14 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ApiResource(
-    itemOperations: [
-        'get' => [
-            'normalization_context' => ['groups' => 'category:read:item', 'enable_max_depth' => true]
-        ],
-        'put',
-        'patch',
-        'delete'
-    ]
+    normalizationContext: ['groups' => 'category:read:item', 'enable_max_depth' => true]
 )]
 class Category
 {

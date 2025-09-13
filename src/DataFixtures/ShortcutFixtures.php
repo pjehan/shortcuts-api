@@ -12,7 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class ShortcutFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         // Software references
         /** @var Software $referenceChrome */

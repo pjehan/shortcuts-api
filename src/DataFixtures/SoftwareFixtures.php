@@ -9,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class SoftwareFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $softwares = [
             ['Google Chrome', 'chrome'],
